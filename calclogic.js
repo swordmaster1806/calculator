@@ -37,6 +37,7 @@ calc.addEventListener("click", (event) => {
 
     if (event.target.classList[0] === "operator") {
 
+        decimalPresent = false;
         if (event.target.textContent === "clear") {
             operator = undefined;
             operand1 = undefined;
@@ -44,7 +45,6 @@ calc.addEventListener("click", (event) => {
             op1Written = false;
             op2Written = false;
             operandWritten = false;
-            decimalPresent = false;
             digitarray = [];
 
         }
@@ -90,12 +90,11 @@ calc.addEventListener("click", (event) => {
     else if(event.target.matches("button")){
 
     if(event.target.textContent === '.'){ 
-
-        if(!decimalPresent){
-        decimalPresent = true;
-        digitarray.push(event.target.textContent)
+       
+        if(digitarray.length !== 0 && Number(digitarray[digitarray.length - 1])!== NaN && decimalPresent === false){
+            decimalPresent = true;
+            digitarray.push(event.target.textContent)
         }
-        
     }
 
 
@@ -131,8 +130,10 @@ document.body.addEventListener("click", () => {
     let s = display.textContent.split('');
 
     decimalPresent = false;
+    
     s.forEach((char) => {
-        if(char == ".")decimalPresent = true;
+        if(char === ".")decimalPresent = true;
+        else if(char === "-" || char === "+" ||char === "*" || char === "/")decimalPresent = false;
     })
 
 
