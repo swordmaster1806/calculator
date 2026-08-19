@@ -1,0 +1,115 @@
+/*
+  Josh's Custom CSS Reset
+  https://www.joshwcomeau.com/css/custom-css-reset/
+*/
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+*:not(dialog) {
+    margin: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    html {
+        interpolate-size: allow-keywords;
+    }
+}
+
+body {
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+    display: block;
+    max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+    font: inherit;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    overflow-wrap: break-word;
+}
+
+p {
+    text-wrap: pretty;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    text-wrap: balance;
+}
+
+#root,
+#__next {
+    isolation: isolate;
+}
+
+
+
+.calculator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 100px auto;
+
+    gap: 5px;
+    height: 500px;
+    padding:10px;
+    border: 2px solid  #142d4c; 
+    width:max-content;
+   
+
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+ 
+}
+
+button{
+
+
+    flex: 1 1 0%;
+    border-radius:10px;
+    background-color: #9fd3c7;
+    border:2px solid 
+    
+} 
+
+.display,
+.row {
+    flex: 1 1 0%;
+    width:500px;
+    gap:5px;
+    
+}
+
+.display{
+    border: 2px solid #385170;;
+    font-size:20px;
+}
