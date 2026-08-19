@@ -8,6 +8,7 @@ let op1Written = false;
 let op2Written = false;
 let operandWritten = false;
 let result = 0;
+let decimalPresent = false;
 
 const display = document.querySelector(".display");
 
@@ -43,11 +44,13 @@ calc.addEventListener("click", (event) => {
             op1Written = false;
             op2Written = false;
             operandWritten = false;
+            decimalPresent = false;
             digitarray = [];
 
         }
 
         else if (op1Written && !op2Written && event.target.textContent !== "=") {
+
 
             if (!operandWritten) {
                 operand1 = +digitarray.join('');
@@ -85,7 +88,21 @@ calc.addEventListener("click", (event) => {
     }
 
     else if(event.target.matches("button")){
+
+    if(event.target.textContent === '.'){ 
+
+        if(!decimalPresent){
+        decimalPresent = true;
+        digitarray.push(event.target.textContent)
+        }
+        
+    }
+
+
+    else{
     digitarray.push(event.target.textContent)
+    }
+    
     op1Written = true;
     if (operandWritten) op2Written = true;
     }
@@ -110,5 +127,13 @@ document.body.addEventListener("click", () => {
     }
 
     display.textContent = text;
+
+    let s = display.textContent.split('');
+
+    decimalPresent = false;
+    s.forEach((char) => {
+        if(char == ".")decimalPresent = true;
+    })
+
 
 })
