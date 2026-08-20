@@ -30,6 +30,15 @@ function operate(opeerand1, operand, operrand2) {
 }
 
 
+function clear() {
+    operator = undefined;
+    operand1 = undefined;
+    operand2 = undefined;
+    op1Written = false;
+    op2Written = false;
+    operandWritten = false;
+    digitarray = [];
+}
 
 
 
@@ -38,15 +47,17 @@ calc.addEventListener("click", (event) => {
     if (event.target.classList[0] === "operator") {
 
         decimalPresent = false;
-        if (event.target.textContent === "clear") {
-            operator = undefined;
-            operand1 = undefined;
-            operand2 = undefined;
-            op1Written = false;
-            op2Written = false;
-            operandWritten = false;
-            digitarray = [];
 
+        if (op2Written &&  (+digitarray.join('') === 0) && operator === "/") {
+
+            clear();
+            display.textContent = "";
+
+        }
+
+        else if (event.target.textContent === "clear") {
+
+            clear();
         }
 
         else if (op1Written && !op2Written && event.target.textContent !== "=") {
@@ -87,23 +98,23 @@ calc.addEventListener("click", (event) => {
         }
     }
 
-    else if(event.target.matches("button")){
+    else if (event.target.matches("button")) {
 
-    if(event.target.textContent === '.'){ 
-       
-        if(digitarray.length !== 0 && Number(digitarray[digitarray.length - 1])!== NaN && decimalPresent === false){
-            decimalPresent = true;
+        if (event.target.textContent === '.') {
+
+            if (digitarray.length !== 0 && Number(digitarray[digitarray.length - 1]) !== NaN && decimalPresent === false) {
+                decimalPresent = true;
+                digitarray.push(event.target.textContent)
+            }
+        }
+
+
+        else {
             digitarray.push(event.target.textContent)
         }
-    }
 
-
-    else{
-    digitarray.push(event.target.textContent)
-    }
-    
-    op1Written = true;
-    if (operandWritten) op2Written = true;
+        op1Written = true;
+        if (operandWritten) op2Written = true;
     }
 
 });
@@ -114,27 +125,33 @@ calc.addEventListener("click", (event) => {
 document.body.addEventListener("click", () => {
     let text = "";
 
-    if (op1Written && !operandWritten) text = `${digitarray.join('')}`;
+   
+ 
+   
 
-    else if (op1Written && !op2Written) text = `${operand1}` + " " + `${operator}`;
+        if (op1Written && !operandWritten) text = `${digitarray.join('')}`;
 
-    else if (op1Written && op2Written && event.target.classList != "operator") text = `${operand1}` + " " + `${operator}` + " " + `${digitarray.join('')}`;
+        else if (op1Written && !op2Written) text = `${operand1}` + " " + `${operator}`;
 
-    else if (op1Written && op2Written && event.target.classList != "operator") {
-        if (event.target.textContent === "=") text = `${result}`;
-        else text = `${result} + " " + ${operator}`
+        else if (op1Written && op2Written && event.target.classList != "operator") text = `${operand1}` + " " + `${operator}` + " " + `${digitarray.join('')}`;
+
+        else if (op1Written && op2Written && event.target.classList != "operator") {
+            if (event.target.textContent === "=") text = `${result}`;
+            else text = `${result} + " " + ${operator}`
+        }
+
+        display.textContent = text;
+
+        let s = display.textContent.split('');
+
+        decimalPresent = false;
+
+        s.forEach((char) => {
+            if (char === ".") decimalPresent = true;
+            else if (char === "-" || char === "+" || char === "*" || char === "/") decimalPresent = false;
+        })
+
     }
 
-    display.textContent = text;
 
-    let s = display.textContent.split('');
-
-    decimalPresent = false;
-    
-    s.forEach((char) => {
-        if(char === ".")decimalPresent = true;
-        else if(char === "-" || char === "+" ||char === "*" || char === "/")decimalPresent = false;
-    })
-
-
-})
+)
